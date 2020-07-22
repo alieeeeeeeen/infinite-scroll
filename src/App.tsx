@@ -1,24 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import { debounce } from 'throttle-debounce';
 import './App.css';
+import InfiniteScroller from './infiniteScroller';
 
 function App() {
+  const [data, setData] = useState([1,2,3,4,5,6,7,8,8,9])
+  const fetchData = debounce(100, function() {
+    setData([...data, ...[1]]);
+  })
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <InfiniteScroller 
+          hasMore={true}
+          next={fetchData}>
+          {
+            data.map((v, k) => <div key={k} className="item">{v}</div>)
+          }
+        </InfiniteScroller>
     </div>
   );
 }
