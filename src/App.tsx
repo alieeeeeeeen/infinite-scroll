@@ -9,8 +9,25 @@ function App() {
     setData([...data, ...[1]]);
   })
 
+  const [inputState, setState] = useState({title: '', amount: ''})
+
   return (
     <div className="App">
+      <input type="text" id="title" value={inputState.title} onChange={event => {
+        const title = event.target.value;
+        setState(prevState => {
+          return {
+            title,
+            amount: prevState.amount
+          }
+      })}}/>
+      <input type="text" id="amount" value={inputState.amount} onChange={event => {
+        const amount = event.target.value;
+        setState(prevState => ({
+          amount,
+          title: prevState.title
+        }))
+        }}/>
         <InfiniteScroller 
           hasMore={true}
           next={fetchData}>
