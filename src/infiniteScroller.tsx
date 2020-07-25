@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, ReactNode } from 'react';
 import { throttle } from 'throttle-debounce';
 
 type Fn = () => any;
 interface Props {
     hasMore?: boolean;
     onScroll?: (e:MouseEvent) => any;
+    scrollableTarget?: ReactNode;
     next?: Fn;
     thredshold?: string;
 }
@@ -17,18 +18,30 @@ export default class InfiniteScroller extends Component<Props> {
 
     private el: HTMLElement | undefined | Window;
     private throttledOnScrollListener : (e: MouseEvent) => void;
+    private _scrollableNode: HTMLElement | null | undefined;
 
     componentDidMount() {
-        this.el = window; // todo: customized scrollable elements
+        this._scrollableNode = this.getScrollableNode();
+        this.el =  this._scrollableNode || window; // todo: customized scrollable elements
         if(this.el) {
             this.el.addEventListener('scroll', this.throttledOnScrollListener as EventListener)
         }
     }
 
+    getScrollableNode = () => {
+        if(this.props.scrollableTarget instanceof HTMLElement) {
+            return this.props.scrollableTarget;
+        } else if (typeof this.props.scrollableTarget === 'string') {
+            return document.getElementById(this.props.scrollableTarget);
+        }
+        return null;
+    }
+
     isElementAtBottom(
     ) {
         return (
-            (window.innerHeight + window.scrollY) >= document.body.offsetHeight
+            this._scrollableNode && 
+            (this._scrollableNode.scrollHeight - this._scrollableNode.clientHeight <= this._scrollableNode.scrollTop + 1)
         );
     }
 
