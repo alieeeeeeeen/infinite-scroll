@@ -3,7 +3,7 @@ import { throttle } from 'throttle-debounce';
 
 type Fn = () => any;
 interface Props {
-    hasMore?: boolean;
+    hasMore: boolean;
     scrollableTarget?: ReactNode;
     next?: Fn;
     loader?: ReactNode;
@@ -36,7 +36,7 @@ export default class InfiniteScroller extends Component<Props, State> {
         }
         this._scrollableNode = this.getScrollableNode();
         this.el =  this._scrollableNode || window; // todo: customized scrollable elements
-        if(this.el) {
+        if(this.el && this.props.hasMore) {
             this.el.addEventListener('scroll', this.throttledOnScrollListener as EventListener)
         }
     }
