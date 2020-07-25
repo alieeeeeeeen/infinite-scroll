@@ -6,19 +6,34 @@ interface Props {
     hasMore?: boolean;
     scrollableTarget?: ReactNode;
     next?: Fn;
+    loader?: ReactNode;
+    dataLength: number;
 }
 
-export default class InfiniteScroller extends Component<Props> {
+interface State {
+    showLoader: boolean;
+}
+
+export default class InfiniteScroller extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
+        this.state = {
+            showLoader: false,
+        }
         this.throttledOnScrollListener = throttle(150, this.onScrollListener).bind(this)
     }
+
 
     private el: HTMLElement | undefined | Window;
     private throttledOnScrollListener : (e: MouseEvent) => void;
     private _scrollableNode: HTMLElement | null | undefined;
 
     componentDidMount() {
+        if (typeof this.props.dataLength === 'undefined') {
+            throw new Error(
+              `mandatory prop "dataLength" is missing. The prop is needed.`
+            );
+        }
         this._scrollableNode = this.getScrollableNode();
         this.el =  this._scrollableNode || window; // todo: customized scrollable elements
         if(this.el) {
@@ -50,16 +65,27 @@ export default class InfiniteScroller extends Component<Props> {
                 : document.body;
         const atBottom = this.isElementAtBottom(target);
         if (atBottom && this.props.hasMore) {
+            this.setState({showLoader: true});
             requestAnimationFrame(() => {
                 this.props.next && this.props.next();
             })
           }
     }
 
+    UNSAFE_componentWillReceiveProps(props: Props) {
+        if(this.props.dataLength === props.dataLength) {
+            return;
+        }
+        this.setState({
+            showLoader: false
+        })
+    }
+
     render() {
         return (
             <div>
                 {this.props.children}
+                {this.state.showLoader && this.props.loader}
             </div>
         )
     }

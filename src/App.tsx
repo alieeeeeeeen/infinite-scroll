@@ -36,7 +36,9 @@ function App() {
           <InfiniteScroller 
             hasMore={true}
             scrollableTarget="container"
-            next={fetchData}>
+            loader={<h2>loading......</h2>}
+            next={fetchData}
+            dataLength={data.length}>
             {
               data.map((v, k) => <div key={k} className="item">{v}</div>)
             }
