@@ -4,10 +4,8 @@ import { throttle } from 'throttle-debounce';
 type Fn = () => any;
 interface Props {
     hasMore?: boolean;
-    onScroll?: (e:MouseEvent) => any;
     scrollableTarget?: ReactNode;
     next?: Fn;
-    thredshold?: string;
 }
 
 export default class InfiniteScroller extends Component<Props> {
