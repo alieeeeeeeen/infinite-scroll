@@ -38,15 +38,19 @@ export default class InfiniteScroller extends Component<Props> {
     }
 
     isElementAtBottom(
+        target: HTMLElement
     ) {
         return (
-            this._scrollableNode && 
-            (this._scrollableNode.scrollHeight - this._scrollableNode.clientHeight <= this._scrollableNode.scrollTop + 1)
+            (target.scrollHeight - target.clientHeight <= target.scrollTop + 1)
         );
     }
 
-    onScrollListener = (_: MouseEvent) => {
-        const atBottom = this.isElementAtBottom();
+    onScrollListener = (event: MouseEvent) => {
+        const target = this._scrollableNode ? (event.target as HTMLElement) 
+            : document.documentElement.scrollTop ? 
+                document.documentElement
+                : document.body;
+        const atBottom = this.isElementAtBottom(target);
         if (atBottom && this.props.hasMore) {
             requestAnimationFrame(() => {
                 this.props.next && this.props.next();
