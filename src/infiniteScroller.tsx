@@ -23,7 +23,6 @@ export default class InfiniteScroller extends Component<Props, State> {
         this.throttledOnScrollListener = throttle(150, this.onScrollListener).bind(this)
     }
 
-
     private el: HTMLElement | undefined | Window;
     private throttledOnScrollListener : (e: MouseEvent) => void;
     private _scrollableNode: HTMLElement | null | undefined;
@@ -35,7 +34,7 @@ export default class InfiniteScroller extends Component<Props, State> {
             );
         }
         this._scrollableNode = this.getScrollableNode();
-        this.el =  this._scrollableNode || window; // todo: customized scrollable elements
+        this.el = this._scrollableNode || window; // todo: customized scrollable elements
         if(this.el && this.props.hasMore) {
             this.el.addEventListener('scroll', this.throttledOnScrollListener as EventListener)
         }
