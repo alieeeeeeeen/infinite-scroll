@@ -5,6 +5,7 @@ import './App.css';
 import InfiniteScroller from './infiniteScroller';
 import { useSelector, useDispatch } from 'react-redux'
 import { add } from './store/reducer';
+import Posts from './components/post';
 
 interface arrState {
   arr: number[]
@@ -45,7 +46,7 @@ function App() {
               }}>hello</Link>
             </li>
           </ul>
-          <Route path="/admin" exact render={() => <h1>hello</h1>} />
+          <Route path="/admin" exact component={Posts} />
         </Router>
     </div>
   );
