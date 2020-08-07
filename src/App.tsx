@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
+import { Route, BrowserRouter as Router } from 'react-router-dom';
 import { debounce } from 'throttle-debounce';
 import './App.css';
 import InfiniteScroller from './infiniteScroller';
@@ -10,7 +11,7 @@ interface arrState {
 }
 
 function App() {
-  const arr = useSelector((state: arrState) => state.arr);
+  const arr = useSelector((state: arrState): number[] => state.arr);
   const disaptch = useDispatch();
 
   const fetchData = debounce(100, function() {
@@ -31,7 +32,9 @@ function App() {
             }
           </InfiniteScroller>
         </div>
- 
+        <Router>
+            <Route path="/" exact render={() => <h1>hello</h1>} />
+        </Router>
     </div>
   );
 }
