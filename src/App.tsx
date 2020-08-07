@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, BrowserRouter as Router } from 'react-router-dom';
+import { Route, BrowserRouter as Router, Link } from 'react-router-dom';
 import { debounce } from 'throttle-debounce';
 import './App.css';
 import InfiniteScroller from './infiniteScroller';
@@ -32,8 +32,20 @@ function App() {
             }
           </InfiniteScroller>
         </div>
+    
         <Router>
-            <Route path="/" exact render={() => <h1>hello</h1>} />
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to={{
+                pathname: "/admin",
+                hash: "#submit"
+              }}>hello</Link>
+            </li>
+          </ul>
+          <Route path="/admin" exact render={() => <h1>hello</h1>} />
         </Router>
     </div>
   );
