@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, BrowserRouter as Router, Redirect, NavLink } from 'react-router-dom';
+import { Route, BrowserRouter as Router, NavLink } from 'react-router-dom';
 import { debounce } from 'throttle-debounce';
 import './App.css';
 import InfiniteScroller from './infiniteScroller';
@@ -22,6 +22,7 @@ function App() {
 
   return (
     <div className="App">
+      <div id="test"></div>
         <div style={{height: 200, overflow: 'auto'}} id="container">
           <InfiniteScroller 
             hasMore={true}
@@ -53,5 +54,8 @@ function App() {
     </div>
   );
 }
+
+
+
 
 export default App;

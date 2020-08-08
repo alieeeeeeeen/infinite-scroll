@@ -1,10 +1,12 @@
 import React from 'react';
 import Input from './input';
+import { template, Product } from '../util';
 
 interface State {
     [key: string]: any
 }
 
+@template('<h1>hello world</h1>', 'test')
 class Form extends React.Component<State> {
     state: State = {
         form: {
@@ -52,6 +54,12 @@ class Form extends React.Component<State> {
         }
     }
 
+    componentDidMount() {
+        const a = new Product('1', 1);
+        a.price = 2;
+        console.log(a)
+    }
+
     checkValid(value: string, validation: any) {
         let isValid = true;
         if(validation.required) {
@@ -77,6 +85,7 @@ class Form extends React.Component<State> {
         this.setState({
             form: updatedForm
         })
+        
     }
 
     render() {
@@ -89,6 +98,7 @@ class Form extends React.Component<State> {
         }
         let form = (
             <form>
+                <div id="test"></div>
                {formElementsArray.map(v => (
                    <Input key={v.id}
                           value={v.config.value}

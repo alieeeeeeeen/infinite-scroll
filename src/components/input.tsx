@@ -2,6 +2,7 @@ import React from 'react';
 import './input.css';
 
 const Input = (props: any) => {
+
     let inputElement = null;
     const inputClasses = ['InputElement'];
 

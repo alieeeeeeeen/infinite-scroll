@@ -7,9 +7,10 @@ type RouteParams = {
 
 interface Props extends RouteComponentProps<RouteParams>, React.Props<RouteParams> {}
 
+
 const Posts = (props: Props) => {
     return(
-        <div>posts</div>
+        <div>title</div>
     )
 }
 
