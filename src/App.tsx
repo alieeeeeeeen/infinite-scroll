@@ -1,11 +1,12 @@
 import React from 'react';
-import { Route, BrowserRouter as Router, Link } from 'react-router-dom';
+import { Route, BrowserRouter as Router, Redirect, NavLink } from 'react-router-dom';
 import { debounce } from 'throttle-debounce';
 import './App.css';
 import InfiniteScroller from './infiniteScroller';
 import { useSelector, useDispatch } from 'react-redux'
 import { add } from './store/reducer';
 import Posts from './components/post';
+import Form from './components/form';
 
 interface arrState {
   arr: number[]
@@ -37,16 +38,17 @@ function App() {
         <Router>
           <ul>
             <li>
-              <Link to="/">Home</Link>
+              <NavLink to="/" exact activeClassName="active">Home</NavLink>
             </li>
             <li>
-              <Link to={{
+              <NavLink to={{
                 pathname: "/admin",
                 hash: "#submit"
-              }}>hello</Link>
+              }}>hello</NavLink>
             </li>
           </ul>
-          <Route path="/admin" exact component={Posts} />
+          <Route path="/" exact component={Posts} />
+          <Route path="/admin" exact component={Form} />
         </Router>
     </div>
   );
