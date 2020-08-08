@@ -25,3 +25,7 @@
     display: block;
     margin-bottom: 8px;
 }
+
+.invalid {
+    background-color: red;
+}

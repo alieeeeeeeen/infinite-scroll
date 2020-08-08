@@ -3,11 +3,16 @@ import './input.css';
 
 const Input = (props: any) => {
     let inputElement = null;
+    const inputClasses = ['InputElement'];
+
+    if (props.invalid && props.touchend) {
+        inputClasses.push('invalid');
+    }
 
     switch(props.elementType) {
         case('input'):
             inputElement = <input
-                className='InputElement'
+                className={inputClasses.join(' ')}
                 {...props.elementConfig}
                 value={props.value}
                 onChange={props.changed}
@@ -15,7 +20,7 @@ const Input = (props: any) => {
         break;
         case('text'):
             inputElement = <textarea
-                className='InputElement'
+                className={inputClasses.join(' ')}
                 {...props.elementConfig}
                 value={props.value}
                 onChange={props.changed}
@@ -23,7 +28,7 @@ const Input = (props: any) => {
         break;
         case('select'):
             inputElement = <select
-                className='InputElement'
+                className={inputClasses.join(' ')}
                 onChange={props.changed}
                 value={props.value}
             >

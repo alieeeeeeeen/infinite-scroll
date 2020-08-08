@@ -52,8 +52,12 @@ class Form extends React.Component<State> {
         }
     }
 
-    checkValid(inputIdentifier: string) {
-
+    checkValid(value: string, validation: any) {
+        let isValid = true;
+        if(validation.required) {
+            isValid = value.trim() !== '' && isValid
+        }
+        return isValid;
     }
 
     inputChangedHandler = (e: any, inputIdentifier: string) => {
@@ -64,9 +68,11 @@ class Form extends React.Component<State> {
         const updatedElementForm = {
             ...this.state.form[inputIdentifier],
             value: e.target.value,
-            valid: this.checkValid(inputIdentifier),
             touchend: true
         }
+
+        updatedElementForm.valid = this.checkValid(e.target.value, updatedElementForm.validation);
+
         updatedForm[inputIdentifier] = updatedElementForm;
         this.setState({
             form: updatedForm
@@ -84,10 +90,12 @@ class Form extends React.Component<State> {
         let form = (
             <form>
                {formElementsArray.map(v => (
-                   <Input key={v.id} 
+                   <Input key={v.id}
                           value={v.config.value}
                           elementType={v.config.elementInputType}
                           elementConfig={v.config.elementConfig}
+                          invalid={!v.config.valid}
+                          touchend={v.config.touchend}
                           changed={(event: any) => this.inputChangedHandler(event, v.id)}
                     />
                ))}
