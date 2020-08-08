@@ -14,7 +14,12 @@ class Form extends React.Component<State> {
                     type: 'text',
                     placeholder: 'your name'
                 },
-                value: ''
+                validation: {
+                    required: true
+                },
+                value: '',
+                valid: false,
+                touchend: false
             },
             password: {
                 elementInputType: 'input',
@@ -22,7 +27,12 @@ class Form extends React.Component<State> {
                     type: 'text',
                     placeholder: 'your password'
                 },
-                value: ''
+                validation: {
+                    required: true
+                },
+                value: '',
+                valid: false,
+                touchend: false
             },
             gender: {
                 elementInputType: 'select',
@@ -32,9 +42,18 @@ class Form extends React.Component<State> {
                         {value: '0', displayValue: 'female'}
                     ]
                 },
-                value: ''
+                validation: {
+                    required: true
+                },
+                value: '',
+                valid: false,
+                touchend: false
             }
         }
+    }
+
+    checkValid(inputIdentifier: string) {
+
     }
 
     inputChangedHandler = (e: any, inputIdentifier: string) => {
@@ -44,7 +63,9 @@ class Form extends React.Component<State> {
 
         const updatedElementForm = {
             ...this.state.form[inputIdentifier],
-            value: e.target.value
+            value: e.target.value,
+            valid: this.checkValid(inputIdentifier),
+            touchend: true
         }
         updatedForm[inputIdentifier] = updatedElementForm;
         this.setState({
@@ -65,7 +86,7 @@ class Form extends React.Component<State> {
                {formElementsArray.map(v => (
                    <Input key={v.id} 
                           value={v.config.value}
-                          elementType={v.config.elementType}
+                          elementType={v.config.elementInputType}
                           elementConfig={v.config.elementConfig}
                           changed={(event: any) => this.inputChangedHandler(event, v.id)}
                     />
