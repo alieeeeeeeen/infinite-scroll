@@ -14,13 +14,17 @@ export function Logger(title: string) {
 }
 
 export function template(template: string, id: string) {
-    return function(constructor: any) {
-        const hookEl = document.getElementById(id);
-        const p = new constructor();
-        console.log('1', hookEl)
-        if(hookEl) {
-            hookEl.innerHTML = template;
-            hookEl.querySelector('h1')!.textContent = p.title;
+    return function<T extends {new (...args: any[]): {title: string}}>(
+        originalConstructor: T) {
+        return class extends originalConstructor {
+            constructor(...args: any[]) {
+                super()
+                const hookEl = document.getElementById(id);
+                if(hookEl) {
+                    hookEl.innerHTML = template;
+                    hookEl.querySelector('h1')!.textContent = this.title;
+                }
+            }
         }
     }
 }

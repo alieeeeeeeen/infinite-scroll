@@ -8,6 +8,7 @@ interface State {
 
 @template('<h1>hello world</h1>', 'test')
 class Form extends React.Component<State> {
+    title = 'test'
     state: State = {
         form: {
             name: {
