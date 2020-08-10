@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { add } from './store/reducer';
 import Posts from './components/post';
 import Form from './components/form';
+import TodoList from './components/todolist';
 
 interface arrState {
   arr: number[]
@@ -19,6 +20,8 @@ function App() {
   const fetchData = debounce(100, function() {
     disaptch(add(1))
   })
+
+  const todos = [{id: 't1', text: 'finish the course'}];
 
   return (
     <div className="App">
@@ -42,6 +45,9 @@ function App() {
               <NavLink to="/" exact activeClassName="active">Home</NavLink>
             </li>
             <li>
+              <NavLink to="/todo" exact>Todo</NavLink>
+            </li>
+            <li>
               <NavLink to={{
                 pathname: "/admin",
                 hash: "#submit"
@@ -50,6 +56,7 @@ function App() {
           </ul>
           <Route path="/" exact component={Posts} />
           <Route path="/admin" exact component={Form} />
+          <Route path="/todo" render={(props) => (<TodoList items={todos} {...props}/>)} />
         </Router>
     </div>
   );

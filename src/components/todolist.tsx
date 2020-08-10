@@ -1,0 +1,14 @@
+import React from 'react';
+
+interface TodoProps {
+    items: {id: string, text: string}[];
+}
+
+const TodoList: React.FC<TodoProps> = (props) => {
+    console.log(props)
+    return <ul>
+        {props.items.map(v => <li key={v.id}>{v.text}</li>)}
+    </ul>
+}
+
+export default TodoList;
