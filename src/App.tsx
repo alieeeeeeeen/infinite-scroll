@@ -32,6 +32,12 @@ function App() {
     );
   }
 
+  const todoDeleteHandler = (todoId: string) => {
+    setTodos(prev => {
+      return prev.filter(v => v.id != todoId)
+    })
+  }
+
   return (
     <div className="App">
       <div id="test"></div>
@@ -68,7 +74,7 @@ function App() {
           <Route path="/todo" render={(props) => (
             <>
               <NewTodo onAddTodo = {todoAddHandler} />
-              <TodoList items={todos} {...props}/>
+              <TodoList items={todos} {...props} onDelete={todoDeleteHandler}/>
             </>
           )} />
         </Router>
