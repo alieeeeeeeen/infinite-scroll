@@ -8,6 +8,7 @@ import { add } from './store/reducer';
 import Posts from './components/post';
 import Form from './components/form';
 import TodoList from './components/todolist';
+import NewTodo from './components/newtodo';
 
 interface arrState {
   arr: number[]
@@ -56,7 +57,12 @@ function App() {
           </ul>
           <Route path="/" exact component={Posts} />
           <Route path="/admin" exact component={Form} />
-          <Route path="/todo" render={(props) => (<TodoList items={todos} {...props}/>)} />
+          <Route path="/todo" render={(props) => (
+            <>
+              <NewTodo />
+              <TodoList items={todos} {...props}/>
+            </>
+          )} />
         </Router>
     </div>
   );
