@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, BrowserRouter as Router, NavLink } from 'react-router-dom';
 import { debounce } from 'throttle-debounce';
 import './App.css';
@@ -9,6 +9,7 @@ import Posts from './components/post';
 import Form from './components/form';
 import TodoList from './components/todolist';
 import NewTodo from './components/newtodo';
+import { Todo } from './util/todomodel';
 
 interface arrState {
   arr: number[]
@@ -22,7 +23,11 @@ function App() {
     disaptch(add(1))
   })
 
-  const todos = [{id: 't1', text: 'finish the course'}];
+  const [todos, setTodos] = useState<Todo[]>([]);
+
+  const todoAddHandler = (text: string) => {
+    setTodos([{id: Math.random().toString(), text: text}]);
+  }
 
   return (
     <div className="App">
@@ -59,7 +64,7 @@ function App() {
           <Route path="/admin" exact component={Form} />
           <Route path="/todo" render={(props) => (
             <>
-              <NewTodo />
+              <NewTodo onAddTodo = {todoAddHandler} />
               <TodoList items={todos} {...props}/>
             </>
           )} />
