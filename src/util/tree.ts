@@ -19,7 +19,24 @@ class Node {
     }
 }
 
+class Tree {
+    root: any;
+    constructor() {
+        this.root = null;
+    }
+
+    traverseBF(fn: Function) {
+        const arr = [this.root];
+        while(arr.length) {
+            const node = arr.shift();
+            arr.push(...node.children);
+            fn(node);
+        }
+    }
+}
+
 
 export {
-    Node
+    Node,
+    Tree
 }
