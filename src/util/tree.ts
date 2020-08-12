@@ -58,6 +58,12 @@ class BinaryNode {
     insert(data: any) {
         if(data < this.data && this.left) {
             this.left.insert(data);
+        } else if(data < this.data && !this.left) {
+            this.left = new Node(data);
+        } else if(data > this.data && this.right) {
+            this.right.insert(data);
+        } else if(data > this.data && !this.right) {
+            this.right = new Node(data);
         }
     }
 }
