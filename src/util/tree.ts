@@ -66,6 +66,17 @@ class BinaryNode {
             this.right = new Node(data);
         }
     }
+
+    contains(data: any) {
+        if(this.data === data) {
+            return data;
+        } else if(this.data < data && this.right) {
+            return this.right.contains(data);
+        } else if(this.data > data && this.left) {
+            return this.left.contains(data);
+        }
+        return null;
+    }
 }
 
 
