@@ -1,5 +1,3 @@
-
-
 // node add children remove children
 
 class Node {
@@ -80,8 +78,36 @@ class BinaryNode {
 }
 
 
+class Event {
+    events: any;
+    constructor() {
+        this.events = {}
+    }
+
+    on(eventName: any, callback: Function) {
+        if(this.events[eventName]) {
+            this.events[eventName].push(callback);
+        } else {
+            this.events[eventName] = [callback];
+        }
+    }
+
+    trigger(evnetName: any) {
+        if(this.events[evnetName]) {
+            for(let cb of this.events[evnetName]) {
+                cb();
+            }
+        }
+    }
+
+    off(evnetName: any) {
+        delete this.events[evnetName];
+    }
+}
+
 export {
     Node,
     Tree,
-    BinaryNode
+    BinaryNode,
+    Event
 }
